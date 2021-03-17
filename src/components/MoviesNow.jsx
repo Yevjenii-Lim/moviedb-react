@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 
 let setMovies = (start, finish = 4, arr) => {
-    let newArr = arr.slice(start, finish);
-    console.log(start, finish)
-    console.log(newArr)
-  return newArr
+  let newArr = arr.slice(start, finish);
+
+  return newArr;
 };
 
 const MoviesNow = ({ movies }) => {
@@ -14,16 +13,19 @@ const MoviesNow = ({ movies }) => {
 
   useEffect(() => {
     //   console.log('useefct')
-    pages = +pages * 4
-    let finish = +pages + 4
+    pages = +pages * 4;
+    let finish = +pages + 4;
     let list = setMovies(pages, finish, movies);
     // console.log(list)
     setList(list);
   }, [pages, movies]);
   let onPageChange = (e) => {
-     setPage(e.target.innerText) 
+    let value = e.target.getAttribute("data-value");
+
+    setPage(value);
     // console.log(e.target.innerText);
   };
+
   let items = listMovies.map((movie) => {
     return (
       <MovieCard
@@ -39,19 +41,29 @@ const MoviesNow = ({ movies }) => {
       />
     );
   });
-  let pagination = []
-  for(let i = 0; i < movies.length / 4; i++) {
-    pagination.push(<span onClick={onPageChange} key={i} className="inline-block px-2 mt-10">{i}</span>)
+  let pagination = [];
+  for (let i = 0; i < movies.length / 4; i++) {
+      let active  = null
+      if(+pages === i) {
+        active = 'p-4'
+      }
+    pagination.push(
+      <span
+        onClick={onPageChange}
+        key={i}
+        data-value={i}
+        className={"block mt-10 mx-4 rounded-full bg-yellow-500 p-2 bg-black " + active}
+      ></span>
+    );
   }
   return (
     <div className="relative">
-      <h2 className="text-center mt-10 mb-10">Movies in theatres</h2>
+      <h2 className="text-center my-10 text-xl text-white">Movies in theatres</h2>
       <div className="flex justify-between overflow-hidden ">{items}</div>
       <div>
         {" "}
-        <div className="text-right">
-        {pagination}
-
+        <div className="text-right flex items-center justify-end">
+          {pagination}
         </div>
       </div>
     </div>

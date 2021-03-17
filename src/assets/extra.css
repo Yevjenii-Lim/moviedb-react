@@ -1,5 +1,11 @@
 .overview {
     background-color: rgba(0, 0, 0, 0.8);
-  
+    height: 93%;
     transition: 0.5s;
+}
+body {
+    background-image: url('./movie-site-bg.jpg');
+    
+    background-repeat: no-repeat;
+
 }

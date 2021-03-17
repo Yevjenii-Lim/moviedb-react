@@ -1,8 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./../assets/extra.css";
-
-
+import Context from "./Context";
 
 let colors = ["red", "yellow", "green", "blue", "pink"];
 
@@ -38,41 +37,50 @@ let useGenres = (genre) => {
 };
 
 const MovieCard = ({ img, title, vote, adult, overview, date, genre, id }) => {
-    let [showDetails, setShowDetails] = useState(false)
+  let { addSaved } = useContext(Context);
+
+  let [showDetails, setShowDetails] = useState(false);
   let posterUrl = "https://image.tmdb.org/t/p/original/" + img;
   let items = useGenres(genre);
 
   let moveBg = () => {
-    setShowDetails(!showDetails)
+    setShowDetails(!showDetails);
   };
-let top = showDetails ? "0" : "full"
+  let top = showDetails ? "0" : "full";
 
-if(overview.length > 150){
-  let string = overview.slice(0, 150)
-    string += "..."
-    overview = string 
-}
-let handler = (e) => {
+  if (overview.length > 150) {
+    var string = overview.slice(0, 150);
+    string += "...";
+   
+  }
+  let handler = (e) => {
     e.stopPropagation();
-}
+    addSaved({ img, title, vote, adult, overview, date, genre, id, items });
+  };
   return (
-    <div
-      className="max-w-xs w-1/5  relative overflow-hidden flex-shrink-0"
-      onClick={() => moveBg()}
-    >
+    <div className="max-w-xs w-1/5  relative overflow-hidden flex-shrink-0">
       <div className="max-w-xs">
-        <img src={posterUrl} alt="" />
+        <img src={posterUrl} alt="" onClick={() => moveBg()} />
       </div>
-      {/* <h3 className="text-xl font-medium">{title}</h3> */}
+      <button
+        onClick={handler}
+        className="bg-white px-2 rounded mt-2 font-medium outline-none"
+      >
+        Save
+      </button>
       <div
         id={id}
-        className={"absolute max-w-xs w-full h-full overview  px-2  top-" + top} 
+        className={"absolute max-w-xs w-full overview  px-2  top-" + top}
+        onClick={() => moveBg()}
       >
         <ul className="flex flex-wrap">{items}</ul>
-        <p className="text-white ">
-          {overview}
-        </p>
-        <button onClick={handler} className="bg-white px-2 rounded mt-2 font-medium outline-none">More</button>
+        <p className="text-white ">{string}</p>
+        <button
+          onClick={handler}
+          className="bg-white px-2 rounded mt-2 font-medium outline-none"
+        >
+          More
+        </button>
       </div>
     </div>
   );
