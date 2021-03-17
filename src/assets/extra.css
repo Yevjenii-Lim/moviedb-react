@@ -3,9 +3,25 @@
     height: 93%;
     transition: 0.5s;
 }
+.cover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
 body {
     background-image: url('./movie-site-bg.jpg');
-    
+    background-size: cover;
     background-repeat: no-repeat;
 
+}
+
+.moveup {
+    top: -50%;
+}
+
+.movedown {
+    top: 10%
+}
+
+.number-saved {
+    top: -55%;
+    left: 85%;
 }

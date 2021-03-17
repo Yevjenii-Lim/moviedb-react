@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./../assets/extra.css";
 import Context from "./Context";
 
@@ -28,7 +29,9 @@ let useGenres = (genre) => {
     return (
       <li
         key={index}
-        className={`bg-${colors[getRandomInt(4)]}-400 rounded px-2 m-2 `}
+        className={`bg-${
+          colors[getRandomInt(4)]
+        }-400 rounded px-2 mr-2 mb-2 mt-2`}
       >
         {i.name}
       </li>
@@ -47,11 +50,10 @@ const MovieCard = ({ img, title, vote, adult, overview, date, genre, id }) => {
     setShowDetails(!showDetails);
   };
   let top = showDetails ? "0" : "full";
-
+  let string;
   if (overview.length > 150) {
-    var string = overview.slice(0, 150);
+    string = overview.slice(0, 150);
     string += "...";
-   
   }
   let handler = (e) => {
     e.stopPropagation();
@@ -74,13 +76,13 @@ const MovieCard = ({ img, title, vote, adult, overview, date, genre, id }) => {
         onClick={() => moveBg()}
       >
         <ul className="flex flex-wrap">{items}</ul>
-        <p className="text-white ">{string}</p>
-        <button
-          onClick={handler}
+        <p className="text-white ">{string || overview}</p>
+        <Link
+          to={"movie/" + id}
           className="bg-white px-2 rounded mt-2 font-medium outline-none"
         >
           More
-        </button>
+        </Link>
       </div>
     </div>
   );

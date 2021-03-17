@@ -58,7 +58,7 @@ const MoviesNow = ({ movies }) => {
   }
   return (
     <div className="relative">
-      <h2 className="text-center my-10 text-xl text-white">Movies in theatres</h2>
+      <h2 className=" my-10 text-xl text-white">MOVIES IN THEATRES</h2>
       <div className="flex justify-between overflow-hidden ">{items}</div>
       <div>
         {" "}

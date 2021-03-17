@@ -11,7 +11,6 @@ let LastMovie = (obj) => {
     useEffect(()=> {
         const timer = setTimeout(() => {
             setHidden('hidden')
-            console.log(hid)
           }, 2000);
           return () => {clearTimeout(timer) 
             setHidden('null')
@@ -19,9 +18,12 @@ let LastMovie = (obj) => {
     }, [obj])
 
 if(obj === undefined) return null
-    return <div className={"flex absolute "+ hid}>
-        <img src={"https://image.tmdb.org/t/p/original/" + obj.img} alt="" className="w-full"/>
-        <span className="bg-white text-black">{obj.title}</span>
+    return <div className={"flex absolute w-40 rounded border-2 border-black -left-full " + hid }>
+       
+        <img src={"https://image.tmdb.org/t/p/original/" + obj.img} alt="" className="w-1/2"/>
+
+    
+        <p className="bg-white text-black flex items-center">{obj.title}</p>
     </div>
 }
 
@@ -50,8 +52,8 @@ const Header = () => {
             </div>
             <div className="flex items-center">
                 <ul className="flex ">
-                    <li className='mr-5 relative'><Link to="saved">Saved</Link>
-                        <span className="absolute bg-red-500">{saved.length}</span>
+                    <li className='mr-5 relative'><Link to="/saved">Saved</Link>
+                       { saved.length > 0 ? <p className="absolute bg-red-500 rounded-full px-2 number-saved ">{saved.length}</p> :  null }
     
                             {LastMovie(saved[saved.length - 1])}
              
